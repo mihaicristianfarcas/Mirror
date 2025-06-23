@@ -1,6 +1,7 @@
 import '@/global.css'
 
 import { NAV_THEME } from '@/lib/constants'
+import { ModelProvider } from '@/lib/ModelContext'
 import { useColorScheme } from '@/lib/useColorScheme'
 import {
   DarkTheme,
@@ -51,12 +52,17 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="notes/[id]" options={{ headerShown: false }} />
-        <Stack.Screen name="mind-maps/[id]" options={{ headerShown: false }} />
-      </Stack>
+      <ModelProvider>
+        <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="notes/[id]" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="mind-maps/[id]"
+            options={{ headerShown: false }}
+          />
+        </Stack>
+      </ModelProvider>
     </ThemeProvider>
   )
 }
