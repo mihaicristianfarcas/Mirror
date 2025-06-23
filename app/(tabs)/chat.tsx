@@ -30,7 +30,7 @@ type Message = {
   showThought?: boolean
 }
 
-function App(): React.JSX.Element {
+function Chat(): React.JSX.Element {
   const INITIAL_CONVERSATION: Message[] = [
     {
       role: 'system',
@@ -931,4 +931,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default App
+export default Chat
