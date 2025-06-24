@@ -12,6 +12,7 @@ import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import * as React from 'react'
 import { Platform } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import '@/global.css'
 
@@ -70,29 +71,31 @@ export default function RootLayout() {
 
   return (
     <>
-      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-        <ModelProvider>
-          <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="notes/[id]"
-              options={{ headerShown: false, animation: 'slide_from_right' }}
-            />
-            <Stack.Screen
-              name="mind-maps/[id]"
-              options={{ headerShown: false, animation: 'slide_from_right' }}
-            />
-            <Stack.Screen
-              name="settings/ai"
-              options={{
-                headerShown: false,
-                animation: 'slide_from_right'
-              }}
-            />
-          </Stack>
-        </ModelProvider>
-      </ThemeProvider>
+      <SafeAreaProvider>
+        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+          <ModelProvider>
+            <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="notes/[id]"
+                options={{ headerShown: false, animation: 'slide_from_right' }}
+              />
+              <Stack.Screen
+                name="mind-maps/[id]"
+                options={{ headerShown: false, animation: 'slide_from_right' }}
+              />
+              <Stack.Screen
+                name="settings/ai"
+                options={{
+                  headerShown: false,
+                  animation: 'slide_from_right'
+                }}
+              />
+            </Stack>
+          </ModelProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
       <PortalHost />
     </>
   )
