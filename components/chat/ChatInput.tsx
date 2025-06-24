@@ -1,5 +1,8 @@
+import { Button } from '@/components/ui/button'
+import { Text } from '@/components/ui/text'
+import { Textarea } from '@/components/ui/textarea'
 import React from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { View } from 'react-native'
 
 interface ChatInputProps {
   userInput: string
@@ -20,29 +23,31 @@ const ChatInput: React.FC<ChatInputProps> = ({
 }) => (
   <View className="border-t border-gray-100 bg-white px-4 py-3">
     <View className="flex-row items-center justify-end gap-3">
-      <TextInput
+      <Textarea
         className="min-h-10 flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-base text-gray-800 focus:border-gray-300 focus:bg-white"
         placeholder="Message..."
         placeholderTextColor="#9CA3AF"
         value={userInput}
         onChangeText={setUserInput}
         multiline
+        numberOfLines={1}
       />
       {isGenerating ? (
-        <TouchableOpacity
+        <Button
+          variant="outline"
           className="justify-center rounded-xl bg-gray-700 px-5 py-3"
           onPress={stopGeneration}>
           <Text className="font-medium text-white">Stop</Text>
-        </TouchableOpacity>
+        </Button>
       ) : (
-        <TouchableOpacity
+        <Button
           className="justify-center rounded-xl bg-gray-900 px-5 py-3"
           onPress={handleSendMessage}
           disabled={isLoading}>
           <Text className="font-medium text-white">
             {isLoading ? 'Sending...' : 'Send'}
           </Text>
-        </TouchableOpacity>
+        </Button>
       )}
     </View>
   </View>

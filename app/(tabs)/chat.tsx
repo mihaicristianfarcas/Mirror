@@ -5,7 +5,6 @@ import {
   Platform,
   SafeAreaView,
   ScrollView,
-  Text,
   View
 } from 'react-native'
 
@@ -14,6 +13,7 @@ import { initLlama, releaseAllLlama } from 'llama.rn'
 import ChatConversation from '@/components/chat/ChatConversation'
 import ChatInput from '@/components/chat/ChatInput'
 import TabTitle from '@/components/TabTitle'
+import { Text } from '@/components/ui/text'
 import '@/global.css'
 import { useModel } from '@/lib/ModelContext'
 

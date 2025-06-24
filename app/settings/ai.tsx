@@ -1,12 +1,14 @@
 import { downloadModel } from '@/api/model'
 import ModelSelection from '@/components/chat/ModelSelection'
+import { Button } from '@/components/ui/button'
+import { Text } from '@/components/ui/text'
 import { ArrowLeft } from '@/lib/icons/ArrowLeft'
 import { useModel } from '@/lib/ModelContext'
 import axios from 'axios'
 import { router } from 'expo-router'
 import { releaseAllLlama } from 'llama.rn'
 import React, { useState } from 'react'
-import { Alert, Text, TouchableOpacity } from 'react-native'
+import { Alert } from 'react-native'
 import RNFS from 'react-native-fs'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -155,12 +157,13 @@ const AISettingsScreen = () => {
 
   return (
     <SafeAreaView className="bg-background flex-1">
-      <TouchableOpacity
+      <Button
+        variant="ghost"
         onPress={() => router.back()}
-        className="flex-row items-center justify-start gap-2 p-2">
+        className="h-auto flex-row items-center justify-start gap-2 p-2">
         <ArrowLeft height={20} width={20} />
         <Text>Back to settings</Text>
-      </TouchableOpacity>
+      </Button>
       <ModelSelection
         modelFormats={modelFormats}
         selectedModelFormat={selectedModelFormat}

@@ -1,5 +1,5 @@
+import { Text } from '@/components/ui/text'
 import { useLocalSearchParams } from 'expo-router'
-import { Text } from 'react-native'
 
 const Note = () => {
   const { id } = useLocalSearchParams()

@@ -1,8 +1,11 @@
 import TabTitle from '@/components/TabTitle'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Text } from '@/components/ui/text'
 import { Grid3x3 } from '@/lib/icons/Grid3x3'
 import { Plus } from '@/lib/icons/Plus'
 import { Search } from '@/lib/icons/Search'
-import { FlatList, Pressable, Text, TextInput, View } from 'react-native'
+import { FlatList, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const MindMapsScreen = () => {
@@ -41,10 +44,10 @@ const MindMapsScreen = () => {
       <View className="mx-6 mb-6">
         <View className="bg-background-secondary border-border-subtle flex-row items-center rounded-xl border px-4 py-3">
           <Search size={20} color="#94a3b8" />
-          <TextInput
+          <Input
             placeholder="Search mind maps..."
             placeholderTextColor="#94a3b8"
-            className="text-foreground ml-3 flex-1 text-base"
+            className="text-foreground ml-3 flex-1 border-0 bg-transparent text-base"
           />
         </View>
       </View>
@@ -53,7 +56,9 @@ const MindMapsScreen = () => {
       <FlatList
         data={mockMindMaps}
         renderItem={({ item }) => (
-          <Pressable className="bg-background border-border active:bg-background-secondary mx-6 mb-4 overflow-hidden rounded-xl border">
+          <Button
+            variant="outline"
+            className="bg-background border-border active:bg-background-secondary mx-6 mb-4 h-auto overflow-hidden rounded-xl border">
             {/* Color accent bar */}
             <View
               style={{ backgroundColor: item.color }}
@@ -77,7 +82,7 @@ const MindMapsScreen = () => {
                 </Text>
               </View>
             </View>
-          </Pressable>
+          </Button>
         )}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
@@ -97,9 +102,9 @@ const MindMapsScreen = () => {
       />
 
       {/* Floating Action Button */}
-      <Pressable className="bg-accent active:bg-accent/90 absolute bottom-24 right-6 h-14 w-14 items-center justify-center rounded-full shadow-lg">
+      <Button className="bg-accent active:bg-accent/90 absolute bottom-24 right-6 h-14 w-14 items-center justify-center rounded-full shadow-lg">
         <Plus size={24} color="white" strokeWidth={2.5} />
-      </Pressable>
+      </Button>
     </SafeAreaView>
   )
 }

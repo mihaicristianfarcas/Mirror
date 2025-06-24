@@ -1,5 +1,7 @@
+import { Button } from '@/components/ui/button'
+import { Text } from '@/components/ui/text'
 import React from 'react'
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 
 interface ModelSelectionProps {
   modelFormats: { label: string }[]
@@ -33,15 +35,16 @@ const ModelSelection: React.FC<ModelSelectionProps> = ({
       Select model format
     </Text>
     {modelFormats.map(format => (
-      <TouchableOpacity
+      <Button
         key={format.label}
-        className={`my-1 rounded-lg border px-4 py-3 ${selectedModelFormat === format.label ? 'border-gray-900 bg-gray-900' : 'border-gray-200 bg-gray-50'}`}
+        variant={selectedModelFormat === format.label ? 'default' : 'outline'}
+        className={`my-1 rounded-lg px-4 py-3 ${selectedModelFormat === format.label ? 'border-gray-900 bg-gray-900' : 'border-gray-200 bg-gray-50'}`}
         onPress={() => handleFormatSelection(format.label)}>
         <Text
           className={`text-center text-base font-medium ${selectedModelFormat === format.label ? 'text-white' : 'text-gray-700'}`}>
           {format.label}
         </Text>
-      </TouchableOpacity>
+      </Button>
     ))}
     {selectedModelFormat && (
       <View>
@@ -53,8 +56,9 @@ const ModelSelection: React.FC<ModelSelectionProps> = ({
           const isDownloaded = downloadedModels.includes(file)
           return (
             <View key={index} className="my-1 overflow-hidden rounded-lg">
-              <TouchableOpacity
-                className={`rounded-lg border p-4 ${selectedGGUF === file ? 'border-gray-900 bg-gray-900' : isDownloaded ? 'border-gray-300 bg-gray-50' : 'border-gray-200 bg-white'}`}
+              <Button
+                variant={selectedGGUF === file ? 'default' : 'outline'}
+                className={`rounded-lg p-4 ${selectedGGUF === file ? 'border-gray-900 bg-gray-900' : isDownloaded ? 'border-gray-300 bg-gray-50' : 'border-gray-200 bg-white'} h-auto`}
                 onPress={() =>
                   isDownloaded
                     ? (loadModel(file),
@@ -88,7 +92,7 @@ const ModelSelection: React.FC<ModelSelectionProps> = ({
                     </View>
                   )}
                 </View>
-              </TouchableOpacity>
+              </Button>
             </View>
           )
         })}

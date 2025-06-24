@@ -1,10 +1,12 @@
 import TabTitle from '@/components/TabTitle'
+import { Button } from '@/components/ui/button'
+import { Text } from '@/components/ui/text'
 import '@/global.css'
 import { ArrowRight } from '@/lib/icons/ArrowRight'
 import { Grid3x3 } from '@/lib/icons/Grid3x3'
 import { MessageCircle } from '@/lib/icons/MessageCircle'
 import { Notebook } from '@/lib/icons/Notebook'
-import { Pressable, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const App = () => {
@@ -48,9 +50,10 @@ const App = () => {
         {quickActions.map(action => {
           const IconComponent = action.icon
           return (
-            <Pressable
+            <Button
               key={action.id}
-              className="bg-background border-border active:bg-background-secondary mb-3 flex-row items-center rounded-xl border p-5">
+              variant="outline"
+              className="bg-background border-border active:bg-background-secondary mb-3 h-auto flex-row items-center rounded-xl border p-5">
               <View
                 style={{ backgroundColor: `${action.color}15` }}
                 className="mr-4 h-12 w-12 items-center justify-center rounded-xl">
@@ -67,7 +70,7 @@ const App = () => {
               </View>
 
               <ArrowRight size={20} color="#cbd5e1" />
-            </Pressable>
+            </Button>
           )
         })}
       </View>

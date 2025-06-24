@@ -1,5 +1,7 @@
+import { Button } from '@/components/ui/button'
+import { Text } from '@/components/ui/text'
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
 interface Message {
@@ -31,13 +33,14 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
             <Text
               className={`text-base leading-relaxed ${msg.role === 'user' ? 'text-white' : 'text-gray-800'}`}>
               {msg.thought && (
-                <TouchableOpacity
+                <Button
+                  variant="ghost"
                   onPress={() => toggleThought(index + 1)}
-                  className="mb-2">
+                  className="mb-2 h-auto p-0">
                   <Text className="text-xs font-medium text-gray-500">
                     {msg.showThought ? '▼ Hide reasoning' : '▶ Show reasoning'}
                   </Text>
-                </TouchableOpacity>
+                </Button>
               )}
               {msg.showThought && msg.thought && (
                 <View className="mb-3 rounded-lg border-l-2 border-gray-300 bg-gray-50 p-3">

@@ -1,11 +1,13 @@
 import TabTitle from '@/components/TabTitle'
+import { Button } from '@/components/ui/button'
+import { Text } from '@/components/ui/text'
 import { Bell } from '@/lib/icons/Bell'
 import { ChevronRight } from '@/lib/icons/ChevronRight'
 import { HelpCircle } from '@/lib/icons/HelpCircle'
 import { Palette } from '@/lib/icons/Palette'
 import { Shield } from '@/lib/icons/Shield'
 import { useRouter } from 'expo-router'
-import { Pressable, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface SettingsItem {
@@ -67,9 +69,10 @@ const Settings = () => {
         {settingsItems.map(item => {
           const IconComponent = item.icon
           return (
-            <Pressable
+            <Button
               key={item.id}
-              className="bg-background border-border active:bg-background-secondary mb-3 flex-row items-center rounded-xl border p-5"
+              variant="outline"
+              className="bg-background border-border active:bg-background-secondary mb-3 h-auto flex-row items-center rounded-xl border p-5"
               onPress={() => handleSettingsPress(item.route)}>
               <View
                 style={{ backgroundColor: `${item.color}15` }}
@@ -87,7 +90,7 @@ const Settings = () => {
               </View>
 
               <ChevronRight size={20} color="#cbd5e1" />
-            </Pressable>
+            </Button>
           )
         })}
       </View>

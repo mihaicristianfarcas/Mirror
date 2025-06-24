@@ -1,6 +1,9 @@
 import TabTitle from '@/components/TabTitle'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Text } from '@/components/ui/text'
 import { Search } from '@/lib/icons/Search'
-import { FlatList, Pressable, Text, TextInput, View } from 'react-native'
+import { FlatList, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const NotesScreen = () => {
@@ -33,10 +36,10 @@ const NotesScreen = () => {
       <View className="mx-6 mb-6">
         <View className="bg-background-secondary border-border-subtle flex-row items-center rounded-xl border px-4 py-3">
           <Search size={20} color="#94a3b8" />
-          <TextInput
+          <Input
             placeholder="Search notes..."
             placeholderTextColor="#94a3b8"
-            className="text-foreground ml-3 flex-1 text-base"
+            className="text-foreground ml-3 flex-1 border-0 bg-transparent text-base"
           />
         </View>
       </View>
@@ -45,7 +48,9 @@ const NotesScreen = () => {
       <FlatList
         data={mockNotes}
         renderItem={({ item }) => (
-          <Pressable className="bg-background border-border active:bg-background-secondary mx-6 mb-4 rounded-xl border p-5">
+          <Button
+            variant="outline"
+            className="bg-background border-border active:bg-background-secondary mx-6 mb-4 h-auto rounded-xl border p-5">
             <View className="mb-2 flex-row items-start justify-between">
               <Text className="text-foreground flex-1 text-lg font-semibold">
                 {item.title}
@@ -59,7 +64,7 @@ const NotesScreen = () => {
               numberOfLines={2}>
               {item.preview}
             </Text>
-          </Pressable>
+          </Button>
         )}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}

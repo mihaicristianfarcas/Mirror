@@ -1,6 +1,7 @@
-import ProgressBar from '@/components/ProgressBar'
+import { Progress } from '@/components/ui/progress'
+import { Text } from '@/components/ui/text'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 interface DownloadProgressProps {
   selectedGGUF: string | null
@@ -16,7 +17,7 @@ const DownloadProgress: React.FC<DownloadProgressProps> = ({
       Downloading model
     </Text>
     <Text className="mb-4 font-mono text-sm text-gray-600">{selectedGGUF}</Text>
-    <ProgressBar progress={progress} />
+    <Progress value={progress} className="w-full" />
   </View>
 )
 
