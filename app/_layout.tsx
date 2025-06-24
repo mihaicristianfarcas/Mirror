@@ -1,5 +1,3 @@
-import '@/global.css'
-
 import { NAV_THEME } from '@/lib/constants'
 import { ModelProvider } from '@/lib/ModelContext'
 import { useColorScheme } from '@/lib/useColorScheme'
@@ -9,10 +7,13 @@ import {
   Theme,
   ThemeProvider
 } from '@react-navigation/native'
+import { PortalHost } from '@rn-primitives/portal'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import * as React from 'react'
 import { Platform } from 'react-native'
+
+import '@/global.css'
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -71,6 +72,7 @@ export default function RootLayout() {
               animation: 'slide_from_right'
             }}
           />
+          <PortalHost />
         </Stack>
       </ModelProvider>
     </ThemeProvider>
