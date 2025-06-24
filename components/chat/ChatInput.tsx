@@ -21,7 +21,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   handleSendMessage,
   stopGeneration
 }) => (
-  <View className="border-border bg-card border-t px-4 py-3">
+  <View className="px-4 pt-3">
     <View className="flex-row items-center justify-end gap-3">
       <Textarea
         className="border-border bg-background text-foreground focus:border-ring focus:bg-background min-h-10 flex-1 rounded-xl border px-4 py-3 text-base"

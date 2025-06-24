@@ -255,7 +255,7 @@ export default function Chat(): React.JSX.Element {
             />
           )}
         </ScrollView>
-        <View className="border-border bg-card border-t pb-5">
+        <View className="border-border bg-card border-t">
           {isModelLoaded && (
             <ChatInput
               userInput={userInput}
