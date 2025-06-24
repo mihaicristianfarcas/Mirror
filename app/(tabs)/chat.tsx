@@ -13,6 +13,7 @@ import { initLlama, releaseAllLlama } from 'llama.rn'
 
 import ChatConversation from '@/components/chat/ChatConversation'
 import ChatInput from '@/components/chat/ChatInput'
+import TabTitle from '@/components/TabTitle'
 import '@/global.css'
 import { useModel } from '@/lib/ModelContext'
 
@@ -239,9 +240,7 @@ export default function Chat(): React.JSX.Element {
           ref={scrollViewRef}
           onScroll={handleScroll}
           scrollEventThrottle={16}>
-          <Text className="my-6 text-center text-3xl font-bold text-red-500">
-            Llama Chat
-          </Text>
+          <TabTitle title="Chat about your writings" />
           {!isModelLoaded && (
             <Text className="text-center text-base text-gray-500">
               Please select and load a model in Settings.

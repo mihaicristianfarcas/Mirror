@@ -1,10 +1,13 @@
-import { Text } from 'react-native'
+import TabTitle from '@/components/TabTitle'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const MindMapsScreen = () => {
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      <Text className="text-2xl font-bold text-foreground">Mind Maps</Text>
+    <SafeAreaView className="bg-background flex-1">
+      <TabTitle
+        title="Mind Maps"
+        subtitle="Visualize your ideas and connections"
+      />
     </SafeAreaView>
   )
 }

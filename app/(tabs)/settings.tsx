@@ -1,3 +1,4 @@
+import TabTitle from '@/components/TabTitle'
 import { Settings2 } from '@/lib/icons/Settings2'
 import { useRouter } from 'expo-router'
 import { Text, TouchableOpacity, View } from 'react-native'
@@ -29,12 +30,7 @@ const Settings = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
-      <View className="border-b border-gray-200 bg-white px-5 py-5">
-        <Text className="mb-1 text-3xl font-bold text-gray-900">Settings</Text>
-        <Text className="text-base leading-5 text-gray-600">
-          Customize your app experience
-        </Text>
-      </View>
+      <TabTitle title="Settings" subtitle="Customize your experience" />
 
       <View className="flex-1 pt-5">
         {settingsItems.map(item => (

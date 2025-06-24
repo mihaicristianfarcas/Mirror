@@ -28,33 +28,33 @@ const ModelSelection: React.FC<ModelSelectionProps> = ({
   setCurrentPage,
   setSelectedGGUF
 }) => (
-  <View className="m-4 rounded-2xl bg-white p-6 shadow-md">
-    <Text className="mb-4 mt-4 text-lg font-semibold text-slate-800">
-      Choose a model format
+  <View className="m-4 rounded-2xl border border-gray-100 bg-white p-6">
+    <Text className="mb-4 text-lg font-medium text-gray-800">
+      Select model format
     </Text>
     {modelFormats.map(format => (
       <TouchableOpacity
         key={format.label}
-        className={`my-1 rounded-xl bg-blue-200 px-6 py-3 shadow ${selectedModelFormat === format.label ? 'bg-blue-600' : ''}`}
+        className={`my-1 rounded-lg border px-4 py-3 ${selectedModelFormat === format.label ? 'border-gray-900 bg-gray-900' : 'border-gray-200 bg-gray-50'}`}
         onPress={() => handleFormatSelection(format.label)}>
         <Text
-          className={`text-center text-base font-semibold ${selectedModelFormat === format.label ? 'text-white' : 'text-blue-900'}`}>
+          className={`text-center text-base font-medium ${selectedModelFormat === format.label ? 'text-white' : 'text-gray-700'}`}>
           {format.label}
         </Text>
       </TouchableOpacity>
     ))}
     {selectedModelFormat && (
       <View>
-        <Text className="mb-2 mt-4 text-lg font-semibold text-slate-800">
-          Select a .gguf file
+        <Text className="mb-3 mt-6 text-lg font-medium text-gray-800">
+          Available models
         </Text>
-        {isFetching && <ActivityIndicator size="small" color="#2563EB" />}
+        {isFetching && <ActivityIndicator size="small" color="#374151" />}
         {availableGGUFs.map((file, index) => {
           const isDownloaded = downloadedModels.includes(file)
           return (
-            <View key={index} className="my-1 overflow-hidden rounded-xl">
+            <View key={index} className="my-1 overflow-hidden rounded-lg">
               <TouchableOpacity
-                className={`rounded-xl border bg-blue-50 p-3 ${selectedGGUF === file ? 'bg-blue-600' : ''} ${isDownloaded ? 'border-blue-600' : 'border-blue-200'}`}
+                className={`rounded-lg border p-4 ${selectedGGUF === file ? 'border-gray-900 bg-gray-900' : isDownloaded ? 'border-gray-300 bg-gray-50' : 'border-gray-200 bg-white'}`}
                 onPress={() =>
                   isDownloaded
                     ? (loadModel(file),
@@ -65,33 +65,25 @@ const ModelSelection: React.FC<ModelSelectionProps> = ({
                 <View className="flex-row items-center justify-between">
                   <View className="flex-1 flex-row items-center">
                     {isDownloaded ? (
-                      <View className="mr-2 rounded-md bg-blue-100 p-1">
-                        <Text className="text-xs font-bold text-blue-600">
-                          ▼
-                        </Text>
-                      </View>
+                      <View className="mr-3 h-2 w-2 rounded-full bg-green-500"></View>
                     ) : (
-                      <View className="mr-2 rounded-md bg-slate-100 p-1">
-                        <Text className="text-xs font-bold text-slate-400">
-                          ▽
-                        </Text>
-                      </View>
+                      <View className="mr-3 h-2 w-2 rounded-full bg-gray-300"></View>
                     )}
                     <Text
-                      className={`text-sm font-medium ${selectedGGUF === file ? 'text-white' : isDownloaded ? 'text-blue-800' : 'text-blue-900'}`}>
+                      className={`text-sm font-medium ${selectedGGUF === file ? 'text-white' : 'text-gray-700'}`}>
                       {file.split('-').pop()}
                     </Text>
                   </View>
                   {isDownloaded ? (
-                    <View className="ml-2 rounded-md bg-blue-100 px-3 py-1">
-                      <Text className="text-xs font-semibold tracking-wide text-blue-600">
-                        TAP TO LOAD →
+                    <View className="ml-3 rounded-md border border-green-200 bg-green-50 px-3 py-1">
+                      <Text className="text-xs font-medium text-green-700">
+                        Load
                       </Text>
                     </View>
                   ) : (
-                    <View className="ml-2 rounded-md bg-green-100 px-3 py-1">
-                      <Text className="text-xs font-semibold tracking-wide text-green-600">
-                        DOWNLOAD →
+                    <View className="ml-3 rounded-md border border-gray-200 bg-gray-100 px-3 py-1">
+                      <Text className="text-xs font-medium text-gray-600">
+                        Download
                       </Text>
                     </View>
                   )}

@@ -1,13 +1,15 @@
+import TabTitle from '@/components/TabTitle'
 import { Search } from 'lucide-react-native'
-import { Text, FlatList, TextInput, View } from 'react-native'
+import { FlatList, Text, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const NotesScreen = () => {
   return (
     <SafeAreaView>
-      <Text style={{ padding: 20, fontSize: 24, fontWeight: 'bold' }}>
-        Your Notes
-      </Text>
+      <TabTitle
+        title="Your Notes"
+        subtitle="Capture and organize your thoughts"
+      />
 
       <View className="flex-row items-center justify-start gap-4 rounded-lg bg-white p-4 shadow-sm">
         <Search />
