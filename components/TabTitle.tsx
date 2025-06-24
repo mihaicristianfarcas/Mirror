@@ -17,7 +17,7 @@ export default function TabTitle({
         {title}
       </Text>
       {subtitle && (
-        <Text className="text-foreground-muted mt-2 text-lg leading-relaxed">
+        <Text className="text-muted-foreground mt-2 text-lg leading-relaxed">
           {subtitle}
         </Text>
       )}

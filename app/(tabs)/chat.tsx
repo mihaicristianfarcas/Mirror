@@ -231,7 +231,7 @@ export default function Chat(): React.JSX.Element {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="bg-background flex-1">
       <KeyboardAvoidingView
         className="flex-1"
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -242,7 +242,7 @@ export default function Chat(): React.JSX.Element {
           scrollEventThrottle={16}>
           <TabTitle title="Chat about your writings" />
           {!isModelLoaded && (
-            <Text className="text-center text-base text-gray-500">
+            <Text className="text-muted-foreground px-4 text-center text-base">
               Please select and load a model in Settings.
             </Text>
           )}
@@ -255,7 +255,7 @@ export default function Chat(): React.JSX.Element {
             />
           )}
         </ScrollView>
-        <View className="border-t border-slate-200 bg-white pb-5">
+        <View className="border-border bg-card border-t pb-5">
           {isModelLoaded && (
             <ChatInput
               userInput={userInput}

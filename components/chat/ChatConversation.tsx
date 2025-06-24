@@ -29,25 +29,25 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
       {conversation.slice(1).map((msg, index) => (
         <View key={index} className="mb-6">
           <View
-            className={`max-w-[85%] rounded-2xl px-4 py-3 ${msg.role === 'user' ? 'self-end bg-gray-900' : 'self-start border border-gray-100 bg-gray-50'}`}>
+            className={`max-w-[85%] rounded-2xl px-4 py-3 ${msg.role === 'user' ? 'bg-primary self-end' : 'border-border bg-card self-start border'}`}>
             <Text
-              className={`text-base leading-relaxed ${msg.role === 'user' ? 'text-white' : 'text-gray-800'}`}>
+              className={`text-base leading-relaxed ${msg.role === 'user' ? 'text-primary-foreground' : 'text-card-foreground'}`}>
               {msg.thought && (
                 <Button
                   variant="ghost"
                   onPress={() => toggleThought(index + 1)}
                   className="mb-2 h-auto p-0">
-                  <Text className="text-xs font-medium text-gray-500">
+                  <Text className="text-muted-foreground text-xs font-medium">
                     {msg.showThought ? '▼ Hide reasoning' : '▶ Show reasoning'}
                   </Text>
                 </Button>
               )}
               {msg.showThought && msg.thought && (
-                <View className="mb-3 rounded-lg border-l-2 border-gray-300 bg-gray-50 p-3">
-                  <Text className="mb-2 text-xs font-medium text-gray-500">
+                <View className="border-border bg-muted mb-3 rounded-lg border-l-2 p-3">
+                  <Text className="text-muted-foreground mb-2 text-xs font-medium">
                     Reasoning:
                   </Text>
-                  <Text className="text-xs leading-relaxed text-gray-600">
+                  <Text className="text-muted-foreground text-xs leading-relaxed">
                     {msg.thought}
                   </Text>
                 </View>
@@ -56,7 +56,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
             </Text>
           </View>
           {msg.role === 'assistant' && (
-            <Text className="mt-1 text-xs text-gray-400">
+            <Text className="text-muted-foreground mt-1 text-xs">
               {tokensPerSecond[Math.floor(index / 2)]} tokens/s
             </Text>
           )}

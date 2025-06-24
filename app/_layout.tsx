@@ -42,10 +42,27 @@ export default function RootLayout() {
     if (Platform.OS === 'web') {
       // Adds the background color to the html element to prevent white background on overscroll.
       document.documentElement.classList.add('bg-background')
+      // Apply dark mode class to html element
+      if (isDarkColorScheme) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
     }
     setIsColorSchemeLoaded(true)
     hasMounted.current = true
-  }, [])
+  }, [isDarkColorScheme])
+
+  // Update dark mode class when color scheme changes
+  React.useEffect(() => {
+    if (Platform.OS === 'web') {
+      if (isDarkColorScheme) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    }
+  }, [isDarkColorScheme])
 
   if (!isColorSchemeLoaded) {
     return null

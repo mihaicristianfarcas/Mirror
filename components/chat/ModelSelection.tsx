@@ -30,35 +30,37 @@ const ModelSelection: React.FC<ModelSelectionProps> = ({
   setCurrentPage,
   setSelectedGGUF
 }) => (
-  <View className="m-4 rounded-2xl border border-gray-100 bg-white p-6">
-    <Text className="mb-4 text-lg font-medium text-gray-800">
+  <View className="border-border bg-card m-4 rounded-2xl border p-6">
+    <Text className="text-card-foreground mb-4 text-lg font-medium">
       Select model format
     </Text>
     {modelFormats.map(format => (
       <Button
         key={format.label}
         variant={selectedModelFormat === format.label ? 'default' : 'outline'}
-        className={`my-1 rounded-lg px-4 py-3 ${selectedModelFormat === format.label ? 'border-gray-900 bg-gray-900' : 'border-gray-200 bg-gray-50'}`}
+        className={`my-1 rounded-lg px-4 py-3 ${selectedModelFormat === format.label ? 'border-primary bg-primary' : 'border-border bg-muted'}`}
         onPress={() => handleFormatSelection(format.label)}>
         <Text
-          className={`text-center text-base font-medium ${selectedModelFormat === format.label ? 'text-white' : 'text-gray-700'}`}>
+          className={`text-center text-base font-medium ${selectedModelFormat === format.label ? 'text-primary-foreground' : 'text-muted-foreground'}`}>
           {format.label}
         </Text>
       </Button>
     ))}
     {selectedModelFormat && (
       <View>
-        <Text className="mb-3 mt-6 text-lg font-medium text-gray-800">
+        <Text className="text-card-foreground mb-3 mt-6 text-lg font-medium">
           Available models
         </Text>
-        {isFetching && <ActivityIndicator size="small" color="#374151" />}
+        {isFetching && (
+          <ActivityIndicator size="small" color="hsl(var(--foreground))" />
+        )}
         {availableGGUFs.map((file, index) => {
           const isDownloaded = downloadedModels.includes(file)
           return (
             <View key={index} className="my-1 overflow-hidden rounded-lg">
               <Button
                 variant={selectedGGUF === file ? 'default' : 'outline'}
-                className={`rounded-lg p-4 ${selectedGGUF === file ? 'border-gray-900 bg-gray-900' : isDownloaded ? 'border-gray-300 bg-gray-50' : 'border-gray-200 bg-white'} h-auto`}
+                className={`rounded-lg p-4 ${selectedGGUF === file ? 'border-primary bg-primary' : isDownloaded ? 'border-border bg-muted' : 'border-border bg-card'} h-auto`}
                 onPress={() =>
                   isDownloaded
                     ? (loadModel(file),
@@ -71,10 +73,10 @@ const ModelSelection: React.FC<ModelSelectionProps> = ({
                     {isDownloaded ? (
                       <View className="mr-3 h-2 w-2 rounded-full bg-green-500"></View>
                     ) : (
-                      <View className="mr-3 h-2 w-2 rounded-full bg-gray-300"></View>
+                      <View className="bg-muted-foreground mr-3 h-2 w-2 rounded-full"></View>
                     )}
                     <Text
-                      className={`text-sm font-medium ${selectedGGUF === file ? 'text-white' : 'text-gray-700'}`}>
+                      className={`text-sm font-medium ${selectedGGUF === file ? 'text-primary-foreground' : 'text-card-foreground'}`}>
                       {file.split('-').pop()}
                     </Text>
                   </View>
@@ -85,8 +87,8 @@ const ModelSelection: React.FC<ModelSelectionProps> = ({
                       </Text>
                     </View>
                   ) : (
-                    <View className="ml-3 rounded-md border border-gray-200 bg-gray-100 px-3 py-1">
-                      <Text className="text-xs font-medium text-gray-600">
+                    <View className="border-border bg-muted ml-3 rounded-md border px-3 py-1">
+                      <Text className="text-muted-foreground text-xs font-medium">
                         Download
                       </Text>
                     </View>

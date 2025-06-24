@@ -12,11 +12,13 @@ const DownloadProgress: React.FC<DownloadProgressProps> = ({
   selectedGGUF,
   progress
 }) => (
-  <View className="m-4 rounded-2xl border border-gray-100 bg-white p-6">
-    <Text className="mb-2 text-lg font-medium text-gray-800">
+  <View className="border-border bg-card m-4 rounded-2xl border p-6">
+    <Text className="text-card-foreground mb-2 text-lg font-medium">
       Downloading model
     </Text>
-    <Text className="mb-4 font-mono text-sm text-gray-600">{selectedGGUF}</Text>
+    <Text className="text-muted-foreground mb-4 font-mono text-sm">
+      {selectedGGUF}
+    </Text>
     <Progress value={progress} className="w-full" />
   </View>
 )

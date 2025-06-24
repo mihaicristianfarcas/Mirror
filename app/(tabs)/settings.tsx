@@ -84,7 +84,7 @@ const Settings = () => {
                 <Text className="text-foreground text-base font-semibold">
                   {item.title}
                 </Text>
-                <Text className="text-foreground-muted mt-1 text-sm">
+                <Text className="text-muted-foreground mt-1 text-sm">
                   {item.description}
                 </Text>
               </View>
@@ -98,7 +98,7 @@ const Settings = () => {
       {/* App Version */}
       <View className="mt-8 px-6">
         <View className="bg-background-secondary border-border-subtle rounded-xl border p-4">
-          <Text className="text-foreground-muted text-center text-sm">
+          <Text className="text-muted-foreground text-center text-sm">
             Mirror v1.0.0
           </Text>
         </View>

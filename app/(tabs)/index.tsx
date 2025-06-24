@@ -64,7 +64,7 @@ const App = () => {
                 <Text className="text-foreground text-base font-semibold">
                   {action.title}
                 </Text>
-                <Text className="text-foreground-muted mt-1 text-sm">
+                <Text className="text-muted-foreground mt-1 text-sm">
                   {action.subtitle}
                 </Text>
               </View>
@@ -82,7 +82,7 @@ const App = () => {
         </Text>
 
         <View className="bg-background-secondary border-border-subtle rounded-xl border p-6">
-          <Text className="text-foreground-muted text-center text-base">
+          <Text className="text-muted-foreground text-center text-base">
             Your recent notes and mind maps will appear here
           </Text>
         </View>

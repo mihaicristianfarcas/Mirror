@@ -21,12 +21,12 @@ const ChatInput: React.FC<ChatInputProps> = ({
   handleSendMessage,
   stopGeneration
 }) => (
-  <View className="border-t border-gray-100 bg-white px-4 py-3">
+  <View className="border-border bg-card border-t px-4 py-3">
     <View className="flex-row items-center justify-end gap-3">
       <Textarea
-        className="min-h-10 flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-base text-gray-800 focus:border-gray-300 focus:bg-white"
+        className="border-border bg-background text-foreground focus:border-ring focus:bg-background min-h-10 flex-1 rounded-xl border px-4 py-3 text-base"
         placeholder="Message..."
-        placeholderTextColor="#9CA3AF"
+        placeholderTextColor="hsl(var(--muted-foreground))"
         value={userInput}
         onChangeText={setUserInput}
         multiline
@@ -35,16 +35,16 @@ const ChatInput: React.FC<ChatInputProps> = ({
       {isGenerating ? (
         <Button
           variant="outline"
-          className="justify-center rounded-xl bg-gray-700 px-5 py-3"
+          className="bg-secondary justify-center rounded-xl px-5 py-3"
           onPress={stopGeneration}>
-          <Text className="font-medium text-white">Stop</Text>
+          <Text className="text-secondary-foreground font-medium">Stop</Text>
         </Button>
       ) : (
         <Button
-          className="justify-center rounded-xl bg-gray-900 px-5 py-3"
+          className="bg-primary justify-center rounded-xl px-5 py-3"
           onPress={handleSendMessage}
           disabled={isLoading}>
-          <Text className="font-medium text-white">
+          <Text className="text-primary-foreground font-medium">
             {isLoading ? 'Sending...' : 'Send'}
           </Text>
         </Button>

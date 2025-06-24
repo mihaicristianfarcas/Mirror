@@ -60,7 +60,7 @@ const NotesScreen = () => {
               </Text>
             </View>
             <Text
-              className="text-foreground-muted text-base leading-relaxed"
+              className="text-muted-foreground text-base leading-relaxed"
               numberOfLines={2}>
               {item.preview}
             </Text>
@@ -71,7 +71,7 @@ const NotesScreen = () => {
         contentContainerStyle={{ paddingBottom: 100 }}
         ListEmptyComponent={
           <View className="items-center justify-center py-16">
-            <Text className="text-foreground-muted mb-4 text-lg">
+            <Text className="text-muted-foreground mb-4 text-lg">
               No notes yet
             </Text>
             <Text className="text-foreground-subtle px-8 text-center text-base">

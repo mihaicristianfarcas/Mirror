@@ -74,7 +74,7 @@ const MindMapsScreen = () => {
               </View>
 
               <View className="flex-row items-center justify-between">
-                <Text className="text-foreground-muted text-base">
+                <Text className="text-muted-foreground text-base">
                   {item.nodeCount} nodes
                 </Text>
                 <Text className="text-foreground-subtle text-sm">
@@ -90,7 +90,7 @@ const MindMapsScreen = () => {
         ListEmptyComponent={
           <View className="items-center justify-center py-16">
             <Grid3x3 size={48} color="#cbd5e1" />
-            <Text className="text-foreground-muted mb-4 mt-4 text-lg">
+            <Text className="text-muted-foreground mb-4 mt-4 text-lg">
               No mind maps yet
             </Text>
             <Text className="text-foreground-subtle px-8 text-center text-base">
