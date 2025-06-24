@@ -56,10 +56,20 @@ export default function RootLayout() {
         <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="notes/[id]" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="notes/[id]"
+            options={{ headerShown: false, animation: 'slide_from_right' }}
+          />
           <Stack.Screen
             name="mind-maps/[id]"
-            options={{ headerShown: false }}
+            options={{ headerShown: false, animation: 'slide_from_right' }}
+          />
+          <Stack.Screen
+            name="settings/ai"
+            options={{
+              headerShown: false,
+              animation: 'slide_from_right'
+            }}
           />
         </Stack>
       </ModelProvider>

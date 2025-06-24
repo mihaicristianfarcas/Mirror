@@ -1,174 +1,67 @@
-import { downloadModel } from '@/api/model'
-import ModelSelection from '@/components/chat/ModelSelection'
-import { useModel } from '@/lib/ModelContext'
-import axios from 'axios'
-import { releaseAllLlama } from 'llama.rn'
-import React, { useState } from 'react'
-import { Alert, Text } from 'react-native'
-import RNFS from 'react-native-fs'
+import { Settings2 } from '@/lib/icons/Settings2'
+import { useRouter } from 'expo-router'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-const modelFormats = [
-  { label: 'Llama-3.2-1B-Instruct' },
-  { label: 'Qwen2-0.5B-Instruct' },
-  { label: 'DeepSeek-R1-Distill-Qwen-1.5B' },
-  { label: 'SmolLM2-1.7B-Instruct' }
-]
-
-const HF_TO_GGUF = {
-  'Llama-3.2-1B-Instruct': 'medmekk/Llama-3.2-1B-Instruct.GGUF',
-  'DeepSeek-R1-Distill-Qwen-1.5B': 'medmekk/DeepSeek-R1-Distill-Qwen-1.5B.GGUF',
-  'Qwen2-0.5B-Instruct': 'medmekk/Qwen2.5-0.5B-Instruct.GGUF',
-  'SmolLM2-1.7B-Instruct': 'medmekk/SmolLM2-1.7B-Instruct.GGUF'
+interface SettingsItem {
+  id: string
+  title: string
+  description: string
+  route: string
+  icon?: React.ReactNode
 }
 
-const SettingsScreen = () => {
-  const { selectedModel, setSelectedModel, setIsModelLoaded, setModelPath } =
-    useModel()
-  const [selectedModelFormat, setSelectedModelFormat] = useState<string>('')
-  const [availableGGUFs, setAvailableGGUFs] = useState<string[]>([])
-  const [isFetching, setIsFetching] = useState<boolean>(false)
-  const [isDownloading, setIsDownloading] = useState<boolean>(false)
-  const [progress, setProgress] = useState<number>(0)
-  const [downloadedModels, setDownloadedModels] = useState<string[]>([])
-  const [selectedGGUF, setSelectedGGUF] = useState<string | null>(null)
-
-  const fetchAvailableGGUFs = async (modelFormat: string) => {
-    setIsFetching(true)
-    try {
-      const response = await axios.get(
-        `https://huggingface.co/api/models/${HF_TO_GGUF[modelFormat as keyof typeof HF_TO_GGUF]}`
-      )
-      const files = response.data.siblings.filter((file: any) =>
-        file.rfilename.endsWith('.gguf')
-      )
-      setAvailableGGUFs(files.map((file: any) => file.rfilename))
-    } catch (error) {
-      Alert.alert('Error', 'Failed to fetch .gguf files from Hugging Face API.')
-    } finally {
-      setIsFetching(false)
-    }
+const settingsItems: SettingsItem[] = [
+  {
+    id: 'ai',
+    title: 'AI Settings',
+    description: 'Configure AI models and preferences',
+    route: '/settings/ai'
   }
+]
 
-  const handleFormatSelection = (format: string) => {
-    setSelectedModelFormat(format)
-    setAvailableGGUFs([])
-    fetchAvailableGGUFs(format)
-  }
+const Settings = () => {
+  const router = useRouter()
 
-  const checkDownloadedModels = async () => {
-    try {
-      const files = await RNFS.readDir(RNFS.DocumentDirectoryPath)
-      const ggufFiles = files
-        .filter(file => file.name.endsWith('.gguf'))
-        .map(file => file.name)
-      setDownloadedModels(ggufFiles)
-    } catch (error) {
-      console.error('Error checking downloaded models:', error)
-    }
-  }
-
-  React.useEffect(() => {
-    checkDownloadedModels()
-  }, [])
-
-  const checkFileExists = async (filePath: string) => {
-    try {
-      const fileExists = await RNFS.exists(filePath)
-      return fileExists
-    } catch (error) {
-      return false
-    }
-  }
-
-  const handleGGUFSelection = (file: string) => {
-    setSelectedGGUF(file)
-    Alert.alert(
-      'Confirm Download',
-      `Do you want to download ${file} ?`,
-      [
-        {
-          text: 'No',
-          onPress: () => setSelectedGGUF(null),
-          style: 'cancel'
-        },
-        { text: 'Yes', onPress: () => handleDownloadAndLoad(file) }
-      ],
-      { cancelable: false }
-    )
-  }
-
-  const handleDownloadAndLoad = async (file: string) => {
-    await handleDownloadModel(file)
-  }
-
-  const handleDownloadModel = async (file: string) => {
-    const downloadUrl = `https://huggingface.co/${HF_TO_GGUF[selectedModelFormat as keyof typeof HF_TO_GGUF]}/resolve/main/${file}`
-    setIsDownloading(true)
-    setProgress(0)
-    const destPath = `${RNFS.DocumentDirectoryPath}/${file}`
-    if (await checkFileExists(destPath)) {
-      const success = await loadModel(file)
-      if (success) {
-        Alert.alert(
-          'Info',
-          `File ${destPath} already exists, we will load it directly.`
-        )
-        setIsDownloading(false)
-        return
-      }
-    }
-    try {
-      const destPath = await downloadModel(file, downloadUrl, progress =>
-        setProgress(progress)
-      )
-      Alert.alert('Success', `Model downloaded to: ${destPath}`)
-      await loadModel(file)
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error'
-      Alert.alert('Error', `Download failed: ${errorMessage}`)
-    } finally {
-      setIsDownloading(false)
-    }
-  }
-
-  const loadModel = async (modelName: string) => {
-    try {
-      const destPath = `${RNFS.DocumentDirectoryPath}/${modelName}`
-      await releaseAllLlama()
-      setSelectedModel(modelName)
-      setModelPath(destPath)
-      setIsModelLoaded(true)
-      Alert.alert('Model Loaded', 'The model was successfully loaded.')
-      return true
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error'
-      Alert.alert('Error Loading Model', errorMessage)
-      setIsModelLoaded(false)
-      return false
-    }
+  const handleSettingsPress = (route: string) => {
+    router.push(route as any)
   }
 
   return (
-    <SafeAreaView className="bg-background flex-1">
-      <Text className="text-foreground mb-4 text-2xl font-bold">Settings</Text>
-      <ModelSelection
-        modelFormats={modelFormats}
-        selectedModelFormat={selectedModelFormat}
-        handleFormatSelection={handleFormatSelection}
-        availableGGUFs={availableGGUFs}
-        isFetching={isFetching}
-        downloadedModels={downloadedModels}
-        selectedGGUF={selectedGGUF}
-        handleGGUFSelection={handleGGUFSelection}
-        loadModel={loadModel}
-        setCurrentPage={() => {}}
-        setSelectedGGUF={setSelectedGGUF}
-      />
+    <SafeAreaView className="flex-1 bg-gray-50">
+      <View className="border-b border-gray-200 bg-white px-5 py-5">
+        <Text className="mb-1 text-3xl font-bold text-gray-900">Settings</Text>
+        <Text className="text-base leading-5 text-gray-600">
+          Customize your app experience
+        </Text>
+      </View>
+
+      <View className="flex-1 pt-5">
+        {settingsItems.map(item => (
+          <TouchableOpacity
+            key={item.id}
+            className="mx-4 mb-3 flex-row items-center rounded-xl bg-white px-5 py-4 shadow-sm"
+            onPress={() => handleSettingsPress(item.route)}
+            activeOpacity={0.7}>
+            <View className="mr-4 h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+              {item.icon || <Settings2 size={24} color="#666" />}
+            </View>
+            <View className="flex-1">
+              <Text className="mb-0.5 text-base font-semibold text-gray-900">
+                {item.title}
+              </Text>
+              <Text className="text-sm leading-4 text-gray-600">
+                {item.description}
+              </Text>
+            </View>
+            <View className="ml-3">
+              <Text className="text-xl font-light text-gray-300">›</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
     </SafeAreaView>
   )
 }
 
-export default SettingsScreen
+export default Settings
