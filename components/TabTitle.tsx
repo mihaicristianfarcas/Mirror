@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
 
 interface TabTitleProps {
   title: string
@@ -11,15 +11,15 @@ export default function TabTitle({
   subtitle
 }: TabTitleProps): React.JSX.Element {
   return (
-    <>
-      <Text className="text-foreground mx-4 my-6 text-2xl font-bold">
+    <View className="px-6 pb-6 pt-4">
+      <Text className="text-foreground text-3xl font-bold leading-tight tracking-tight">
         {title}
       </Text>
       {subtitle && (
-        <Text className="text-muted-foreground mx-4 -mt-4 mb-4 text-base">
+        <Text className="text-foreground-muted mt-2 text-lg leading-relaxed">
           {subtitle}
         </Text>
       )}
-    </>
+    </View>
   )
 }

@@ -7,17 +7,39 @@ import { Tabs } from 'expo-router'
 
 export default function TabLayout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: '#ffffff',
+          borderTopWidth: 1,
+          borderTopColor: '#f1f5f9',
+          height: 88,
+          paddingBottom: 34,
+          paddingTop: 8,
+          shadowOffset: {
+            width: 0,
+            height: -2
+          },
+          shadowOpacity: 0.06,
+          shadowRadius: 8,
+          elevation: 8
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '500',
+          marginTop: 4
+        },
+        headerShown: false
+      }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Home
               color={color}
               size={focused ? 26 : 24}
-              strokeWidth={focused ? 2.5 : 2}
+              strokeWidth={focused ? 2.2 : 1.8}
             />
           )
         }}
@@ -26,12 +48,11 @@ export default function TabLayout() {
         name="notes"
         options={{
           title: 'Notes',
-          headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Notebook
               color={color}
               size={focused ? 26 : 24}
-              strokeWidth={focused ? 2.5 : 2}
+              strokeWidth={focused ? 2.2 : 1.8}
             />
           )
         }}
@@ -40,12 +61,11 @@ export default function TabLayout() {
         name="mind-maps"
         options={{
           title: 'Mind Maps',
-          headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Map
               color={color}
               size={focused ? 26 : 24}
-              strokeWidth={focused ? 2.5 : 2}
+              strokeWidth={focused ? 2.2 : 1.8}
             />
           )
         }}
@@ -54,12 +74,11 @@ export default function TabLayout() {
         name="chat"
         options={{
           title: 'Chat',
-          headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <MessageCircle
               color={color}
               size={focused ? 26 : 24}
-              strokeWidth={focused ? 2.5 : 2}
+              strokeWidth={focused ? 2.2 : 1.8}
             />
           )
         }}
@@ -68,12 +87,11 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: 'Settings',
-          headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Settings2
               color={color}
               size={focused ? 26 : 24}
-              strokeWidth={focused ? 2.5 : 2}
+              strokeWidth={focused ? 2.2 : 1.8}
             />
           )
         }}

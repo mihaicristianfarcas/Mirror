@@ -1,7 +1,11 @@
 import TabTitle from '@/components/TabTitle'
-import { Settings2 } from '@/lib/icons/Settings2'
+import { Bell } from '@/lib/icons/Bell'
+import { ChevronRight } from '@/lib/icons/ChevronRight'
+import { HelpCircle } from '@/lib/icons/HelpCircle'
+import { Palette } from '@/lib/icons/Palette'
+import { Shield } from '@/lib/icons/Shield'
 import { useRouter } from 'expo-router'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface SettingsItem {
@@ -9,7 +13,8 @@ interface SettingsItem {
   title: string
   description: string
   route: string
-  icon?: React.ReactNode
+  icon: any
+  color: string
 }
 
 const settingsItems: SettingsItem[] = [
@@ -17,7 +22,33 @@ const settingsItems: SettingsItem[] = [
     id: 'ai',
     title: 'AI Settings',
     description: 'Configure AI models and preferences',
-    route: '/settings/ai'
+    route: '/settings/ai',
+    icon: Palette,
+    color: '#3b82f6'
+  },
+  {
+    id: 'privacy',
+    title: 'Privacy & Security',
+    description: 'Manage your data and privacy settings',
+    route: '/settings/privacy',
+    icon: Shield,
+    color: '#10b981'
+  },
+  {
+    id: 'notifications',
+    title: 'Notifications',
+    description: 'Control alerts and notifications',
+    route: '/settings/notifications',
+    icon: Bell,
+    color: '#f59e0b'
+  },
+  {
+    id: 'help',
+    title: 'Help & Support',
+    description: 'Get help and contact support',
+    route: '/settings/help',
+    icon: HelpCircle,
+    color: '#8b5cf6'
   }
 ]
 
@@ -29,32 +60,45 @@ const Settings = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="bg-background flex-1">
       <TabTitle title="Settings" subtitle="Customize your experience" />
 
-      <View className="flex-1 pt-5">
-        {settingsItems.map(item => (
-          <TouchableOpacity
-            key={item.id}
-            className="mx-4 mb-3 flex-row items-center rounded-xl bg-white px-5 py-4 shadow-sm"
-            onPress={() => handleSettingsPress(item.route)}
-            activeOpacity={0.7}>
-            <View className="mr-4 h-10 w-10 items-center justify-center rounded-full bg-gray-100">
-              {item.icon || <Settings2 size={24} color="#666" />}
-            </View>
-            <View className="flex-1">
-              <Text className="mb-0.5 text-base font-semibold text-gray-900">
-                {item.title}
-              </Text>
-              <Text className="text-sm leading-4 text-gray-600">
-                {item.description}
-              </Text>
-            </View>
-            <View className="ml-3">
-              <Text className="text-xl font-light text-gray-300">›</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+      <View className="px-6">
+        {settingsItems.map(item => {
+          const IconComponent = item.icon
+          return (
+            <Pressable
+              key={item.id}
+              className="bg-background border-border active:bg-background-secondary mb-3 flex-row items-center rounded-xl border p-5"
+              onPress={() => handleSettingsPress(item.route)}>
+              <View
+                style={{ backgroundColor: `${item.color}15` }}
+                className="mr-4 h-12 w-12 items-center justify-center rounded-xl">
+                <IconComponent size={24} color={item.color} strokeWidth={2} />
+              </View>
+
+              <View className="flex-1">
+                <Text className="text-foreground text-base font-semibold">
+                  {item.title}
+                </Text>
+                <Text className="text-foreground-muted mt-1 text-sm">
+                  {item.description}
+                </Text>
+              </View>
+
+              <ChevronRight size={20} color="#cbd5e1" />
+            </Pressable>
+          )
+        })}
+      </View>
+
+      {/* App Version */}
+      <View className="mt-8 px-6">
+        <View className="bg-background-secondary border-border-subtle rounded-xl border p-4">
+          <Text className="text-foreground-muted text-center text-sm">
+            Mirror v1.0.0
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   )
