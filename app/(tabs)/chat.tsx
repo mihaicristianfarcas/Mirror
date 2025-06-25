@@ -87,6 +87,21 @@ export default function Chat(): React.JSX.Element {
       )
     )
   }
+
+  const stopGeneration = async () => {
+    try {
+      if (context) {
+        await context.stopCompletion()
+        setIsGenerating(false)
+        setIsLoading(false)
+      }
+    } catch (error) {
+      console.error('Error stopping generation:', error)
+      // Force stop even if there's an error
+      setIsGenerating(false)
+      setIsLoading(false)
+    }
+  }
   const handleScroll = (event: any) => {
     const currentPosition = event.nativeEvent.contentOffset.y
     const contentHeight = event.nativeEvent.contentSize.height
@@ -231,7 +246,7 @@ export default function Chat(): React.JSX.Element {
   }
 
   return (
-    <SafeAreaView className="bg-background flex-1">
+    <SafeAreaView className="flex-1 bg-background">
       <KeyboardAvoidingView
         className="flex-1"
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -242,7 +257,7 @@ export default function Chat(): React.JSX.Element {
           scrollEventThrottle={16}>
           <TabTitle title="Chat about your writings" />
           {!isModelLoaded && (
-            <Text className="text-muted-foreground px-4 text-center text-base">
+            <Text className="px-4 text-center text-base text-muted-foreground">
               Please select and load a model in Settings.
             </Text>
           )}
@@ -255,7 +270,7 @@ export default function Chat(): React.JSX.Element {
             />
           )}
         </ScrollView>
-        <View className="border-border bg-card border-t">
+        <View className="border-t border-border bg-card">
           {isModelLoaded && (
             <ChatInput
               userInput={userInput}
@@ -263,7 +278,7 @@ export default function Chat(): React.JSX.Element {
               isGenerating={isGenerating}
               isLoading={isLoading}
               handleSendMessage={handleSendMessage}
-              stopGeneration={() => {}}
+              stopGeneration={stopGeneration}
             />
           )}
         </View>

@@ -155,8 +155,41 @@ const AISettingsScreen = () => {
     }
   }
 
+  const deleteModel = async (modelName: string) => {
+    try {
+      const destPath = `${RNFS.DocumentDirectoryPath}/${modelName}`
+      const fileExists = await RNFS.exists(destPath)
+
+      if (!fileExists) {
+        Alert.alert('Error', 'Model file not found.')
+        return false
+      }
+
+      // If this is the currently loaded model, release it first
+      if (selectedModel === modelName) {
+        await releaseAllLlama()
+        setSelectedModel('')
+        setModelPath('')
+        setIsModelLoaded(false)
+      }
+
+      await RNFS.unlink(destPath)
+
+      // Update the downloaded models list
+      await checkDownloadedModels()
+
+      Alert.alert('Success', `Model ${modelName} has been deleted.`)
+      return true
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error'
+      Alert.alert('Error Deleting Model', errorMessage)
+      return false
+    }
+  }
+
   return (
-    <SafeAreaView className="bg-background flex-1">
+    <SafeAreaView className="flex-1 bg-background">
       <Button
         variant="ghost"
         onPress={() => router.back()}
@@ -174,6 +207,7 @@ const AISettingsScreen = () => {
         selectedGGUF={selectedGGUF}
         handleGGUFSelection={handleGGUFSelection}
         loadModel={loadModel}
+        deleteModel={deleteModel}
         setCurrentPage={() => {}}
         setSelectedGGUF={setSelectedGGUF}
       />
