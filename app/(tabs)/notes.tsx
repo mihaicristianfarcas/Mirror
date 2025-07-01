@@ -1,53 +1,48 @@
+import FloatingActionButton from '@/components/FloatingActionButton'
 import TabTitle from '@/components/TabTitle'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Text } from '@/components/ui/text'
 import { Search } from '@/lib/icons/Search'
-import { router } from 'expo-router'
+import { NoteService } from '@/lib/services/NoteService'
+import { Note } from '@/lib/types/note'
+import { router, useFocusEffect } from 'expo-router'
+import React, { useCallback, useState } from 'react'
 import { FlatList, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-const NotesScreen = () => {
-  const mockNotes = [
-    {
-      id: '1',
-      title: 'Meeting Notes',
-      preview: 'Discussed project timeline and deliverables...',
-      date: 'Today'
-    },
-    {
-      id: '2',
-      title: 'Book Ideas',
-      preview: 'Collection of interesting concepts for future reading...',
-      date: 'Yesterday'
-    },
-    {
-      id: '3',
-      title: 'Recipe Collection',
-      preview: 'Favorite recipes and cooking experiments...',
-      date: '2 days ago'
-    }
-  ]
+export default function NotesScreen() {
+  const [notes, setNotes] = useState<Note[]>([])
+
+  useFocusEffect(
+    useCallback(() => {
+      NoteService.getNotes().then(setNotes)
+    }, [])
+  )
+
+  const handleCreateNote = () => {
+    NoteService.createNote({ title: 'New Note', content: '' }).then(newNote => {
+      router.push(`/notes/${newNote.id}`)
+    })
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-background">
       <TabTitle title="Notes" subtitle="Capture and organize your thoughts" />
 
       {/* Search Bar */}
-      <View className="mx-6 mb-6">
-        <View className="bg-background-secondary border-border-subtle flex-row items-center rounded-xl border px-4 py-3">
-          <Search size={20} color="#94a3b8" />
-          <Input
-            placeholder="Search notes..."
-            placeholderTextColor="#94a3b8"
-            className="ml-3 flex-1 border-0 bg-transparent text-base text-foreground"
-          />
-        </View>
+      <View className="bg-background-secondary mx-6 mb-4 flex-row items-center rounded-xl border border-border px-4 py-3">
+        <Search size={20} color="#94a3b8" />
+        <Input
+          placeholder="Search notes..."
+          placeholderTextColor="#94a3b8"
+          className="ml-3 flex-1 border-0 bg-transparent text-base text-foreground"
+        />
       </View>
 
       {/* Notes List */}
       <FlatList
-        data={mockNotes}
+        data={notes}
         renderItem={({ item }) => (
           <Button
             variant="outline"
@@ -58,13 +53,13 @@ const NotesScreen = () => {
                 {item.title}
               </Text>
               <Text className="text-foreground-subtle ml-3 text-sm">
-                {item.date}
+                {new Date(item.updatedAt).toLocaleDateString()}
               </Text>
             </View>
             <Text
               className="text-base leading-relaxed text-muted-foreground"
               numberOfLines={2}>
-              {item.preview}
+              {item.content.replace(/<[^>]*>?/gm, '')}
             </Text>
           </Button>
         )}
@@ -83,8 +78,9 @@ const NotesScreen = () => {
           </View>
         }
       />
+
+      {/* Floating Action Button */}
+      <FloatingActionButton onPress={handleCreateNote} />
     </SafeAreaView>
   )
 }
-
-export default NotesScreen

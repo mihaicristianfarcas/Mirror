@@ -1,10 +1,12 @@
 import { Input } from '@/components/ui/input'
 import { Text } from '@/components/ui/text'
 import { ArrowLeft } from '@/lib/icons/ArrowLeft'
+import { NoteService } from '@/lib/services/NoteService'
+import { Note } from '@/lib/types/note'
 import { useColorScheme } from '@/lib/useColorScheme'
 import { router, useLocalSearchParams } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   KeyboardAvoidingView,
   LayoutAnimation,
@@ -23,16 +25,34 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 
-export default function Note() {
+export default function NoteScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const { isDarkColorScheme } = useColorScheme()
   const _editor = React.createRef<QuillEditor>()
-  const [noteTitle, setNoteTitle] = useState('Untitled Note')
+  const [note, setNote] = useState<Note | null>(null)
   const [isEditingTitle, setIsEditingTitle] = useState(false)
   const [showToolbar, setShowToolbar] = useState(false)
 
+  useEffect(() => {
+    NoteService.getNote(id).then(note => {
+      if (note) {
+        setNote(note)
+      } else {
+        router.back()
+      }
+    })
+  }, [id])
+
   const handleGoBack = () => {
     router.back()
+  }
+
+  const handleDelete = () => {
+    if (id) {
+      NoteService.deleteNote(id).then(() => {
+        router.back()
+      })
+    }
   }
 
   const handleSelectionChange = (data: any) => {
@@ -44,6 +64,19 @@ export default function Note() {
       LayoutAnimation.easeInEaseOut()
       setShowToolbar(false)
     }
+  }
+
+  const updateNote = useCallback(
+    (updatedNote: Partial<Note>) => {
+      if (id) {
+        NoteService.updateNote(id, updatedNote)
+      }
+    },
+    [id]
+  )
+
+  if (!note) {
+    return null
   }
 
   return (
@@ -68,10 +101,16 @@ export default function Note() {
         <View className="mx-6 my-2 bg-card/30">
           {isEditingTitle ? (
             <Input
-              value={noteTitle}
-              onChangeText={setNoteTitle}
-              onBlur={() => setIsEditingTitle(false)}
-              onSubmitEditing={() => setIsEditingTitle(false)}
+              value={note.title}
+              onChangeText={title => setNote({ ...note, title })}
+              onBlur={() => {
+                setIsEditingTitle(false)
+                updateNote({ title: note.title })
+              }}
+              onSubmitEditing={() => {
+                setIsEditingTitle(false)
+                updateNote({ title: note.title })
+              }}
               autoFocus
               placeholder="Enter note title..."
               placeholderTextColor={isDarkColorScheme ? '#64748b' : '#94a3b8'}
@@ -84,16 +123,16 @@ export default function Note() {
               onPress={() => setIsEditingTitle(true)}
               className="min-h-10justify-center py-2">
               <Text className="text-2xl font-bold leading-8 text-foreground">
-                {noteTitle}
+                {note.title}
               </Text>
             </TouchableOpacity>
           )}
           <View className="mt-1 flex-row items-center justify-between gap-4">
             <Text className="text-sm text-muted-foreground">
-              Last edited just now
+              {new Date(note.updatedAt).toLocaleString()}
             </Text>
             <View className="mt-1 flex-row items-center justify-end gap-8">
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleDelete}>
                 <Text className="text-sm text-muted-foreground">Delete</Text>
               </TouchableOpacity>
               <TouchableOpacity>
@@ -106,8 +145,10 @@ export default function Note() {
         {/* Editor Container */}
         <View className="mx-1 flex-1 bg-background">
           <QuillEditor
-            key={id}
+            key={isDarkColorScheme ? 'dark' : 'light'}
             ref={_editor}
+            initialHtml={note.content}
+            onHtmlChange={({ html }) => updateNote({ content: html })}
             onSelectionChange={handleSelectionChange}
             theme={
               isDarkColorScheme
