@@ -34,7 +34,7 @@ const MindMapsScreen = () => {
   ]
 
   return (
-    <SafeAreaView className="bg-background flex-1">
+    <SafeAreaView className="flex-1 bg-background">
       <TabTitle
         title="Mind Maps"
         subtitle="Visualize your ideas and connections"
@@ -47,7 +47,7 @@ const MindMapsScreen = () => {
           <Input
             placeholder="Search mind maps..."
             placeholderTextColor="#94a3b8"
-            className="text-foreground ml-3 flex-1 border-0 bg-transparent text-base"
+            className="ml-3 flex-1 border-0 bg-transparent text-base text-foreground"
           />
         </View>
       </View>
@@ -58,7 +58,7 @@ const MindMapsScreen = () => {
         renderItem={({ item }) => (
           <Button
             variant="outline"
-            className="bg-background border-border active:bg-background-secondary mx-6 mb-4 h-auto overflow-hidden rounded-xl border">
+            className="active:bg-background-secondary mx-6 mb-4 h-auto overflow-hidden rounded-xl border border-border bg-background">
             {/* Color accent bar */}
             <View
               style={{ backgroundColor: item.color }}
@@ -67,14 +67,14 @@ const MindMapsScreen = () => {
 
             <View className="p-5">
               <View className="mb-3 flex-row items-start justify-between">
-                <Text className="text-foreground flex-1 text-lg font-semibold">
+                <Text className="flex-1 text-lg font-semibold text-foreground">
                   {item.title}
                 </Text>
                 <Grid3x3 size={20} color="#94a3b8" />
               </View>
 
               <View className="flex-row items-center justify-between">
-                <Text className="text-muted-foreground text-base">
+                <Text className="text-base text-muted-foreground">
                   {item.nodeCount} nodes
                 </Text>
                 <Text className="text-foreground-subtle text-sm">
@@ -90,7 +90,7 @@ const MindMapsScreen = () => {
         ListEmptyComponent={
           <View className="items-center justify-center py-16">
             <Grid3x3 size={48} color="#cbd5e1" />
-            <Text className="text-muted-foreground mb-4 mt-4 text-lg">
+            <Text className="mb-4 mt-4 text-lg text-muted-foreground">
               No mind maps yet
             </Text>
             <Text className="text-foreground-subtle px-8 text-center text-base">
@@ -102,7 +102,7 @@ const MindMapsScreen = () => {
       />
 
       {/* Floating Action Button */}
-      <Button className="bg-accent active:bg-accent/90 absolute bottom-24 right-6 h-14 w-14 items-center justify-center rounded-full shadow-lg">
+      <Button className="absolute bottom-24 right-6 h-14 w-14 items-center justify-center rounded-full bg-accent shadow-lg active:bg-accent/90">
         <Plus size={24} color="white" strokeWidth={2.5} />
       </Button>
     </SafeAreaView>

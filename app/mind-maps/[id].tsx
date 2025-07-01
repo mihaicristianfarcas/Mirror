@@ -3,8 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 const MindMapScreen = () => {
   return (
-    <SafeAreaView className="bg-background flex-1">
-      <Text className="text-foreground text-2xl font-bold">Mind Map</Text>
+    <SafeAreaView className="flex-1 bg-background">
+      <Text className="text-2xl font-bold text-foreground">Mind Map</Text>
     </SafeAreaView>
   )
 }

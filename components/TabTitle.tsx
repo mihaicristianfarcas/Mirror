@@ -13,11 +13,11 @@ export default function TabTitle({
 }: TabTitleProps): React.JSX.Element {
   return (
     <View className="px-6 pb-6 pt-4">
-      <Text className="text-foreground text-3xl font-bold leading-tight tracking-tight">
+      <Text className="text-3xl font-bold leading-tight tracking-tight text-foreground">
         {title}
       </Text>
       {subtitle && (
-        <Text className="text-muted-foreground mt-2 text-lg leading-relaxed">
+        <Text className="mt-2 text-lg leading-relaxed text-muted-foreground">
           {subtitle}
         </Text>
       )}

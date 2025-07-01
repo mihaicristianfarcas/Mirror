@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Text } from '@/components/ui/text'
 import { Search } from '@/lib/icons/Search'
+import { router } from 'expo-router'
 import { FlatList, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -29,7 +30,7 @@ const NotesScreen = () => {
   ]
 
   return (
-    <SafeAreaView className="bg-background flex-1">
+    <SafeAreaView className="flex-1 bg-background">
       <TabTitle title="Notes" subtitle="Capture and organize your thoughts" />
 
       {/* Search Bar */}
@@ -39,7 +40,7 @@ const NotesScreen = () => {
           <Input
             placeholder="Search notes..."
             placeholderTextColor="#94a3b8"
-            className="text-foreground ml-3 flex-1 border-0 bg-transparent text-base"
+            className="ml-3 flex-1 border-0 bg-transparent text-base text-foreground"
           />
         </View>
       </View>
@@ -50,9 +51,10 @@ const NotesScreen = () => {
         renderItem={({ item }) => (
           <Button
             variant="outline"
-            className="bg-background border-border active:bg-background-secondary mx-6 mb-4 h-auto rounded-xl border p-5">
+            className="active:bg-background-secondary mx-6 mb-4 h-auto rounded-xl border border-border bg-background p-5"
+            onPress={() => router.push(`/notes/${item.id}`)}>
             <View className="mb-2 flex-row items-start justify-between">
-              <Text className="text-foreground flex-1 text-lg font-semibold">
+              <Text className="flex-1 text-lg font-semibold text-foreground">
                 {item.title}
               </Text>
               <Text className="text-foreground-subtle ml-3 text-sm">
@@ -60,7 +62,7 @@ const NotesScreen = () => {
               </Text>
             </View>
             <Text
-              className="text-muted-foreground text-base leading-relaxed"
+              className="text-base leading-relaxed text-muted-foreground"
               numberOfLines={2}>
               {item.preview}
             </Text>
@@ -71,7 +73,7 @@ const NotesScreen = () => {
         contentContainerStyle={{ paddingBottom: 100 }}
         ListEmptyComponent={
           <View className="items-center justify-center py-16">
-            <Text className="text-muted-foreground mb-4 text-lg">
+            <Text className="mb-4 text-lg text-muted-foreground">
               No notes yet
             </Text>
             <Text className="text-foreground-subtle px-8 text-center text-base">

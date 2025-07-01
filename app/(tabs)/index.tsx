@@ -35,7 +35,7 @@ const App = () => {
   ]
 
   return (
-    <SafeAreaView className="bg-background flex-1">
+    <SafeAreaView className="flex-1 bg-background">
       <TabTitle
         title="Welcome to Mirror"
         subtitle="Your personal knowledge companion"
@@ -53,7 +53,7 @@ const App = () => {
             <Button
               key={action.id}
               variant="outline"
-              className="bg-background border-border active:bg-background-secondary mb-3 h-auto flex-row items-center rounded-xl border p-5">
+              className="active:bg-background-secondary mb-3 h-auto flex-row items-center rounded-xl border border-border bg-background p-5">
               <View
                 style={{ backgroundColor: `${action.color}15` }}
                 className="mr-4 h-12 w-12 items-center justify-center rounded-xl">
@@ -61,10 +61,10 @@ const App = () => {
               </View>
 
               <View className="flex-1">
-                <Text className="text-foreground text-base font-semibold">
+                <Text className="text-base font-semibold text-foreground">
                   {action.title}
                 </Text>
-                <Text className="text-muted-foreground mt-1 text-sm">
+                <Text className="mt-1 text-sm text-muted-foreground">
                   {action.subtitle}
                 </Text>
               </View>
@@ -82,7 +82,7 @@ const App = () => {
         </Text>
 
         <View className="bg-background-secondary border-border-subtle rounded-xl border p-6">
-          <Text className="text-muted-foreground text-center text-base">
+          <Text className="text-center text-base text-muted-foreground">
             Your recent notes and mind maps will appear here
           </Text>
         </View>

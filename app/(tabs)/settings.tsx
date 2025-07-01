@@ -62,7 +62,7 @@ const Settings = () => {
   }
 
   return (
-    <SafeAreaView className="bg-background flex-1">
+    <SafeAreaView className="flex-1 bg-background">
       <TabTitle title="Settings" subtitle="Customize your experience" />
 
       <View className="px-6">
@@ -72,7 +72,7 @@ const Settings = () => {
             <Button
               key={item.id}
               variant="outline"
-              className="bg-background border-border active:bg-background-secondary mb-3 h-auto flex-row items-center rounded-xl border p-5"
+              className="active:bg-background-secondary mb-3 h-auto flex-row items-center rounded-xl border border-border bg-background p-5"
               onPress={() => handleSettingsPress(item.route)}>
               <View
                 style={{ backgroundColor: `${item.color}15` }}
@@ -81,10 +81,10 @@ const Settings = () => {
               </View>
 
               <View className="flex-1">
-                <Text className="text-foreground text-base font-semibold">
+                <Text className="text-base font-semibold text-foreground">
                   {item.title}
                 </Text>
-                <Text className="text-muted-foreground mt-1 text-sm">
+                <Text className="mt-1 text-sm text-muted-foreground">
                   {item.description}
                 </Text>
               </View>
@@ -98,7 +98,7 @@ const Settings = () => {
       {/* App Version */}
       <View className="mt-8 px-6">
         <View className="bg-background-secondary border-border-subtle rounded-xl border p-4">
-          <Text className="text-muted-foreground text-center text-sm">
+          <Text className="text-center text-sm text-muted-foreground">
             Mirror v1.0.0
           </Text>
         </View>
